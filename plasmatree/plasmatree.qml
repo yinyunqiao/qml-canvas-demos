@@ -2,10 +2,10 @@ import QtQuick 2.0
 import "tree.js" as Tree
 Canvas {
   id:canvas
-  width:2500
-  height:1500
-  renderTarget:Canvas.Image
-  threadRendering:true
+  width:1920
+  height:1200
+  renderTarget:Canvas.FramebufferObject
+  threadRendering:false
   Component.onCompleted :reset();
   function reset() {
     var ctx = canvas.getContext('2d');

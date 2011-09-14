@@ -31,7 +31,7 @@ Vector.prototype = {
 var Leaf = function (p, r, c, ctx) {
     this.p = p || null;
     this.r = r || 0;
-    this.c = c || Qt.rgba(Math.random(),Math.random(),Math.random(),Math.random());
+    this.c = c || Branch.randomrgba(0, 255, 1);//Qt.rgba(Math.random(),Math.random(),Math.random(),1.0);
     this.ctx = ctx;
 }
 
@@ -46,10 +46,9 @@ Leaf.prototype = {
                     ctx.beginPath();
                     ctx.fillStyle = that.color;
                     ctx.moveTo(that.p.x, that.p.y);
-                    ctx.arc(that.p.x, that.p.y, r, 0, Branch.circle, true);
+                    //ctx.arc(that.p.x, that.p.y, r, 0, Branch.circle, true);
+                    ctx.ellipse(that.p.x, that.p.y, r, r)//0, Branch.circle, true);
                     //ctx.fillRect(that.p.x, that.p.y, r, r);
-                    //ctx.ellipse(that.p.x, that.p.y, r, r);
-                    //ctx.roundedRect(that.p.x, that.p.y, 2*r, 2*r, r/5, r/5);
                     ctx.fill();
                // }, r * 60);
             })(i);
@@ -65,7 +64,7 @@ var Branch = function (p, v, r, c, t) {
     this.length = 0;
     this.generation = 1;
     this.tree = t || null;
-    this.color = c || Qt.rgba(Math.random(), Math.random(), Math.random(),Math.random());
+    this.color = c || Branch.randomrgba(0, 255, 1);////Qt.rgba(Math.random(), Math.random(), Math.random(),1.0);
     this.register();
 };
 
@@ -75,12 +74,11 @@ Branch.prototype = {
     },
     draw: function () {
         var ctx = this.tree.ctx;
-        //ctx.beginPath();
+        ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.moveTo(this.p.x, this.p.y);
-        ctx.arc(this.p.x, this.p.y, this.r, 0, Branch.circle, true);
-        //ctx.ellipse(this.p.x, this.p.y, this.r, this.r);
-        //ctx.roundedRect(this.p.x, this.p.y, 2*this.r, 2*this.r, this.r/4, this.r/4);
+        //ctx.arc(this.p.x, this.p.y, this.r, 0, Branch.circle, true);
+        ctx.ellipse(this.p.x, this.p.y, this.r, this.r);//0, Branch.circle, true);
         ctx.fill();
         //ctx.fillRect(this.p.x, this.p.y, this.r, this.r);
     },
@@ -124,7 +122,7 @@ Branch.clone = function (b) {
     return r;
 };
 Branch.rgba = function (r, g, b, a) {
-    return Qt.rgba(r/255.0,g/255.0,b/255.0,a);
+    return "rgba(" + r + "," + g + "," + b + "," +a + ")";//Qt.rgba(r/255.0,g/255.0,b/255.0,a);
 };
 Branch.randomrgba = function (min, max, a) {
     return Branch.rgba(Math.round(Branch.random(min, max)), Math.round(Branch.random(min, max)), Math.round(Branch.random(min, max)), a);

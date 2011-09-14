@@ -130,7 +130,6 @@ Branch.randomrgba = function (min, max, a) {
 
 var Tree = function () {
     var branches = [];
-    var timer;
     this.stat = {
         fork: 0,
         length: 0
@@ -164,7 +163,14 @@ var Tree = function () {
             length: 0
         }
     };
+    this.finished = function() {
+       for (var i = 0; i < branches.length; i++) {
+         var b = branches[i];
+         if (b.r > 0.8 && b.generation <= 10)
+            return false;
+       }
+       return true;
+    }
 };
 
-
-var tree = new Tree();
+var trees = [];

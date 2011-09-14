@@ -2,38 +2,46 @@ import QtQuick 2.0
 import "tree.js" as Tree
 Canvas {
   id:canvas
-  width:2000
+  width:2500
   height:1500
   renderTarget:Canvas.Image
   threadRendering:true
-  Component.onCompleted :{
+  Component.onCompleted :reset();
+  function reset() {
     var ctx = canvas.getContext('2d');
-    Tree.tree.init(ctx);
-
-    ctx.globalCompositeOperation = "lighter";
-    ctx.fillStyle="black";
+    ctx.reset();
+    ctx.fillStyle=Qt.rgba(0, 0, 0, 1);
     ctx.fillRect(0,0,canvas.width, canvas.height);
+    ctx.globalCompositeOperation = "lighter";
+    Tree.trees = [];
+    newTree(ctx);
+    requestPaint();
+  }
+  function newTree(ctx) {
+    var t = new Tree.Tree();
+    t.init(ctx);
+    Tree.trees[Tree.trees.length] = t;
     var stretch_factor = 600/canvas.height;
-    for (var i = 0; i < 5; i++) {
-      new Tree.Branch(new Tree.Vector(canvas.width/2 - 100 + 50 * i, canvas.height)
-                    , new Tree.Vector(Math.random(-1, 1), -3/stretch_factor)
-                    , 15 / stretch_factor
-                    , Qt.rgba(Math.random(), Math.random(), Math.random(), 0.3)//Tree.Branch.randomrgba(30, 255, 0.6)
-                    , Tree.tree);
-    }
-  } 
+    new Tree.Branch(new Tree.Vector(Math.random() * canvas.width/2 + canvas.width/4, canvas.height)
+                  , new Tree.Vector(Math.random(-1, 1), -3/stretch_factor)
+                  , 15 / stretch_factor
+                  , Qt.rgba(Math.random(), Math.random(), Math.random(), 0.3)
+                  , t);
+  }
 
   onPaint: {
-    context.fillStyle="black";
-    context.fillRect(0,0,canvas.width, canvas.height);
-    Tree.tree.render();
-    //context.putImageData(context.getImageData(0, 0, canvas.width, canvas.height).filter(Canvas.GrayScale), 0, 0);
-  } 
-  Timer {
-    id:timer
-    repeat:true
-    interval:33
-    running:true
-    onTriggered: {canvas.requestPaint(); }
+    for (var i = 0; i < Tree.trees.length; i++)
+      if (!Tree.trees[i].finished())
+         Tree.trees[i].render();
+  }
+  onPainted: { 
+    for (var i = 0; i < Tree.trees.length; i++)
+       if (!Tree.trees[i].finished())
+          requestPaint();
+  }
+  MouseArea {
+    anchors.fill:parent
+    onClicked: {newTree(canvas.getContext('2d')); requestPaint();}
+    onDoubleClicked : { reset(); canvas.requestPaint();}
   }
 }

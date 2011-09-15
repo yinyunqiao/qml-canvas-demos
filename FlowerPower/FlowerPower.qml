@@ -29,8 +29,8 @@ Item {
           }
 
           onPositionChanged: {
-              var x =mouse.x;
-              var y = mouse.y;
+              var x =mouse.x - 80;
+              var y = mouse.y - 80;
               var l = FlowerPower.actualPos.set(x, y).subtract(FlowerPower.lastPos).length();
               if (FlowerPower.mousePressed && l > (FlowerPower.Garden.options.bloomRadius.max)) {
                   FlowerPower.garden.createRandomBloom(x, y);
@@ -39,7 +39,7 @@ Item {
           }
 
           onPressed: {
-              var x =mouse.x;
+              var x = mouse.x;
               var y = mouse.y;
               FlowerPower.mousePressed = true;
               FlowerPower.garden.createRandomBloom(x, y);

@@ -182,8 +182,8 @@ Garden.raddeg = function (angle) {
     return angle / Garden.circle * 360;
 };
 Garden.rgba = function (r, g, b, a) {
-    //return Qt.rgba(r/255.0, g/255.0, b/255.0, a);
-    return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+    return Qt.rgba(r/255.0, g/255.0, b/255.0, a);
+    //return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
     //return 'rgba(' + r + '%,' + g + '%,' + b + '%,' + a + ')';
     //return 'green';
     //return '#33FF03';

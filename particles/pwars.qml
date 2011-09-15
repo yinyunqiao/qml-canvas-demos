@@ -7,6 +7,7 @@ Canvas {
   width:360
   height:600
   threadRendering:false
+  renderTarget : Canvas.FramebufferObject
 
   Component.onCompleted: {
     PWARS.canvas = canvas;

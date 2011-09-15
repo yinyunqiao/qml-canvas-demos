@@ -9,7 +9,7 @@ var mouseY = 0;
 var pmouseX = 0;
 var pmouseY = 0;
 var mousePressed = false;
-var drawRate = 6;
+var drawRate = 16;
 var frameCount = 0;
 
 var PI = Math.PI;
@@ -28,17 +28,6 @@ function init(c, rate){
    setup();
 }
 
-function drawInternal(){
-        draw();
-        pmouseX = mouseX;
-        pmouseY = mouseY;
-        frameCount++;
-}
-
-function clear(){
-        g.clearRect(0,0,width,height);
-}
-
 function line(x1, y1, x2, y2){
         g.beginPath();
         g.moveTo(x1,y1);
@@ -51,6 +40,7 @@ function fillStrokeCircle(x,y,radius){
         if(radius<=0)
                 radius = 0;
         g.beginPath();
+        g.moveTo(x,y);
         g.arc(x, y, radius, 0, TWO_PI, true);
         g.closePath();
         g.fill();
@@ -61,6 +51,7 @@ function fillCircle(x, y, radius){
         if(radius<=0)
                 radius = 0;
         g.beginPath();
+        g.moveTo(x,y);
         g.arc(x, y, radius, 0, TWO_PI, true);
         g.closePath();
         g.fill();
@@ -70,6 +61,7 @@ function strokeCircle(x, y, radius){
         if(radius<=0)
                 radius = 0;
         g.beginPath();
+        g.moveTo(x,y);
         g.arc(x,y, radius, 0, TWO_PI, true);
         g.stroke();
 }
@@ -334,7 +326,7 @@ function setup(){
 }
 
 function draw(){
-        clear();
+        g.clearRect(0,0,width,height);
 
 
         for(var w=0; w<worms.length; w++){
@@ -372,6 +364,7 @@ function draw(){
                         if(thickness<=0)
                                 thickness = 0.000001;
                         g.beginPath();
+        g.moveTo(x,y);
                         g.arc(x, y, thickness, worm.segments[0].lAngle, worm.segments[0].rAngle, false);
                         g.closePath();
                         //g.fill();
@@ -385,6 +378,7 @@ function draw(){
                         if(thickness<=0)
                                 thickness = 0.000001;
                         g.beginPath();
+        g.moveTo(xEnd,yEnd);
                         g.arc(xEnd, yEnd, thickness, worm.segments[worm.segments.length-1].lAngle, worm.segments[worm.segments.length-1].rAngle, true);
                         g.closePath();
                         //g.fill();
@@ -422,4 +416,10 @@ function draw(){
                         newWorm.heading = direction;
         }
 
+}
+function drawInternal(){
+        draw();
+        pmouseX = mouseX;
+        pmouseY = mouseY;
+        frameCount++;
 }

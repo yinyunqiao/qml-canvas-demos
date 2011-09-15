@@ -2,9 +2,9 @@ import QtQuick 2.0
 import "tree.js" as Tree
 Canvas {
   id:canvas
-  width:1920
-  height:1200
-  renderTarget:Canvas.FramebufferObject
+  width:1000
+  height:800
+  renderTarget:Canvas.Image
   threadRendering:false
   Component.onCompleted :reset();
   function reset() {

@@ -47,7 +47,7 @@ Leaf.prototype = {
                     ctx.fillStyle = that.color;
                     ctx.moveTo(that.p.x, that.p.y);
                     //ctx.arc(that.p.x, that.p.y, r, 0, Branch.circle, true);
-                    ctx.ellipse(that.p.x, that.p.y, r, r)//0, Branch.circle, true);
+                    ctx.ellipse(that.p.x, that.p.y, 2*r, 2*r)//0, Branch.circle, true);
                     //ctx.fillRect(that.p.x, that.p.y, r, r);
                     ctx.fill();
                // }, r * 60);
@@ -78,7 +78,7 @@ Branch.prototype = {
         ctx.fillStyle = this.color;
         ctx.moveTo(this.p.x, this.p.y);
         //ctx.arc(this.p.x, this.p.y, this.r, 0, Branch.circle, true);
-        ctx.ellipse(this.p.x, this.p.y, this.r, this.r);//0, Branch.circle, true);
+        ctx.ellipse(this.p.x, this.p.y, 2*this.r, 2*this.r);//0, Branch.circle, true);
         ctx.fill();
         //ctx.fillRect(this.p.x, this.p.y, this.r, this.r);
     },
